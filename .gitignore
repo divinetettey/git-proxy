@@ -264,3 +264,5 @@ yarn-error.log*
 # Docusaurus website
 website/build
 website/.docusaurus
+
+/.idea
