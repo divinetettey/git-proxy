@@ -31,6 +31,7 @@ const getPushes = async (query = defaultPushQuery) => {
         method: 1,
         project: 1,
         rejected: 1,
+        rejectionMessage: 1,
         repo: 1,
         repoName: 1,
         timepstamp: 1,
@@ -71,13 +72,14 @@ const authorise = async (id, attestation) => {
   return { message: `authorised ${id}` };
 };
 
-const reject = async (id) => {
+const reject = async (id, rejectionMessage) => {
   const action = await getPush(id);
   action.authorised = false;
   action.canceled = false;
   action.rejected = true;
+  action.rejectionMessage = rejectionMessage;
   await writeAudit(action);
-  return { message: `reject ${id}` };
+  return { message: `reject ${id} with reason ${rejectionMessage}` };
 };
 
 const cancel = async (id) => {

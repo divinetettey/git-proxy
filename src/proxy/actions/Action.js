@@ -14,6 +14,7 @@ class Action {
   authorised = false;
   canceled = false;
   rejected = false;
+  rejectionMessage;
   commitFrom;
   commitTo;
   branch;

@@ -36,7 +36,17 @@ router.get('/:id', async (req, res) => {
 router.post('/:id/reject', async (req, res) => {
   if (req.user) {
     const id = req.params.id;
+    const rejectionMessage = req.body.rejectionMessage;
+
     console.log({ id });
+    console.log({ rejectionMessage });
+
+    if (!rejectionMessage || rejectionMessage == undefined) {
+      res.status(401).send({
+        message: 'please provide a reason for rejecting the push',
+      });
+      return;
+    }
 
     // Get the push request
     const push = await db.getPush(id);
@@ -65,8 +75,10 @@ router.post('/:id/reject', async (req, res) => {
     console.log({ isAllowed });
 
     if (isAllowed) {
-      const result = await db.reject(id);
-      console.log(`user ${req.user.username} rejected push request for ${id}`);
+      const result = await db.reject(id, rejectionMessage);
+      console.log(
+        `user ${req.user.username} rejected push request for ${id} with reason ${rejectionMessage}`,
+      );
       res.send(result);
     } else {
       res.status(401).send({
