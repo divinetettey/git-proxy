@@ -42,7 +42,7 @@ router.post('/:id/reject', async (req, res) => {
     console.log({ rejectionMessage });
 
     if (!rejectionMessage || rejectionMessage == undefined) {
-      res.status(401).send({
+      res.status(400).send({
         message: 'please provide a reason for rejecting the push',
       });
       return;
