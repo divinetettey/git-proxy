@@ -42,6 +42,19 @@ describe('auth', async () => {
         .set('Cookie', `${cookie}`);
       res.should.have.status(404);
     });
+
+    it('should return 401 for no rejection message', async function () {
+      const commitId =
+        '0000000000000000000000000000000000000000__79b4d8953cbc324bcc1eb53d6412ff89666c241f';
+      const res = await chai
+        .request(app)
+        .post(`/api/v1/push/${commitId}/reject`)
+        .set('Cookie', `${cookie}`);
+
+      res.should.have.status(401);
+      console.log(res.body);
+    });
+
   });
 
   after(async function () {
