@@ -17,12 +17,13 @@ let _cookieSecret = defaultSettings.cookieSecret;
 let _sessionMaxAgeHours = defaultSettings.sessionMaxAgeHours;
 let _sslKeyPath = defaultSettings.sslKeyPemPath;
 let _sslCertPath = defaultSettings.sslCertPemPath;
-const _commitConfig = defaultSettings.commitConfig;
-const _attestationConfig = defaultSettings.attestationConfig;
-const _privateOrganizations = defaultSettings.privateOrganizations;
-const _urlShortener = defaultSettings.urlShortener;
-const _contactEmail = defaultSettings.contactEmail;
-const _csrfProtection = defaultSettings.csrfProtection;
+let _plugins = defaultSettings.plugins;
+let _commitConfig = defaultSettings.commitConfig;
+let _attestationConfig = defaultSettings.attestationConfig;
+let _privateOrganizations = defaultSettings.privateOrganizations;
+let _urlShortener = defaultSettings.urlShortener;
+let _contactEmail = defaultSettings.contactEmail;
+let _csrfProtection = defaultSettings.csrfProtection;
 
 // Get configured proxy URL
 const getProxyUrl = () => {
@@ -114,40 +115,66 @@ const getSessionMaxAgeHours = () => {
 
 // Get commit related configuration
 const getCommitConfig = () => {
+  if (_userSettings && _userSettings.commitConfig) {
+    _commitConfig = _userSettings.commitConfig;
+  }
   return _commitConfig;
 };
 
 // Get attestation related configuration
 const getAttestationConfig = () => {
+  if (_userSettings && _userSettings.attestationConfig) {
+    _attestationConfig = _userSettings.attestationConfig;
+  }
   return _attestationConfig;
 };
 
 // Get private organizations related configuration
 const getPrivateOrganizations = () => {
+  if (_userSettings && _userSettings.privateOrganizations) {
+    _privateOrganizations = _userSettings.privateOrganizations;
+  }
   return _privateOrganizations;
 };
 
 // Get URL shortener
 const getURLShortener = () => {
+  if (_userSettings && _userSettings.urlShortener) {
+    _urlShortener = _userSettings.urlShortener;
+  }
   return _urlShortener;
 };
 
 // Get contact e-mail address
 const getContactEmail = () => {
+  if (_userSettings && _userSettings.contactEmail) {
+    _contactEmail = _userSettings.contactEmail;
+  }
   return _contactEmail;
 };
 
 // Get CSRF protection flag
 const getCSRFProtection = () => {
+  if (_userSettings && _userSettings.csrfProtection) {
+    _csrfProtection = _userSettings.csrfProtection;
+  }
   return _csrfProtection;
 };
+
+// Get loadable push plugins
+const getPlugins = () => {
+  if (_userSettings && _userSettings.plugins) {
+    _plugins = _userSettings.plugins;
+  }
+  return _plugins;
+}
 
 const getSSLKeyPath = () => {
   if (_userSettings && _userSettings.sslKeyPemPath) {
     _sslKeyPath = _userSettings.sslKeyPemPath;
   }
   if (!_sslKeyPath) {
-    return "../../certs/key.pem";
+    return '../../certs/key.pem';
   }
   return _sslKeyPath;
 };
@@ -157,7 +184,7 @@ const getSSLCertPath = () => {
     _sslCertPath = _userSettings.sslCertPemPath;
   }
   if (!_sslCertPath) {
-    return "../../certs/cert.pem";
+    return '../../certs/cert.pem';
   }
   return _sslCertPath;
 };
@@ -177,5 +204,6 @@ exports.getPrivateOrganizations = getPrivateOrganizations;
 exports.getURLShortener = getURLShortener;
 exports.getContactEmail = getContactEmail;
 exports.getCSRFProtection = getCSRFProtection;
+exports.getPlugins = getPlugins;
 exports.getSSLKeyPath = getSSLKeyPath;
 exports.getSSLCertPath = getSSLCertPath;
